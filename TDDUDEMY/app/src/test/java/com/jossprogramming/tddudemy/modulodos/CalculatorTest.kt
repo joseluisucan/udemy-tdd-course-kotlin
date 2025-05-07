@@ -1,13 +1,29 @@
 package com.jossprogramming.tddudemy.modulodos
 
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.BeforeClass
 
 import org.junit.Test
 
 class CalculatorTest {
     private lateinit var calculator: Calculator
+
+    companion object{
+        @JvmStatic
+        @BeforeClass
+        fun setUpClass(){
+            println("Configuración una vez antes de todas las pruebas")
+        }
+
+        @JvmStatic
+        @AfterClass
+        fun tearDownClass(){
+            println("Configuración una vez después de todas las pruebas")
+        }
+    }
 
     @Before
     fun setUp(){
