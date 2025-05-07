@@ -26,5 +26,27 @@ Capturar el argumento 1.
 Verificar que el nombre devuelto sea "John Doe"
 * */
 class ExamModuloTresTest {
+    @MockK
+    lateinit var userRepository:UserRepository
 
+    private lateinit var userService:UserService
+
+    @Before
+    fun setUp() {
+        MockKAnnotations.init(this)
+        userService = UserService(userRepository)
+    }
+
+    @Test
+    fun `should return user name and capture argument`() {
+        val slot = slot<Int>()
+        every{userRepository.getUserById(capture(slot))} returns User(1,"John Doe")
+        val result = userService.getUserName(1)
+
+        assertEquals("John Doe",result)
+
+        verify(exactly = 1){userRepository.getUserById(1)}
+
+        assertEquals(1,slot.captured)
+    }
 }
